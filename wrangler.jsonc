@@ -32,6 +32,7 @@
   "containers": [
     {
       "class_name": "ImgTuneApp",
+      "image": "./Dockerfile",
       "max_instances": 5
     }
   ]
