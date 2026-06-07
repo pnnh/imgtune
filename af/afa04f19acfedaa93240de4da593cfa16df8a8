@@ -1,0 +1,32 @@
+.dockerignore
+  h_de2c1989c48e7b 1-23
+worker.ts
+  h_de2c1989c48e7b 1-34
+.gitignore
+  h_de2c1989c48e7b 42-43
+package.json
+  h_de2c1989c48e7b 8-10,21,25,27-28
+tsconfig.json
+  h_de2c1989c48e7b 34-37
+Dockerfile
+  h_de2c1989c48e7b 1-50
+next.config.ts
+  h_de2c1989c48e7b 4-6
+.github/workflows/deploy-cloudflare-containers.yml
+  h_de2c1989c48e7b 1-49
+wrangler.jsonc
+  h_de2c1989c48e7b 1-38
+README.md
+  h_de2c1989c48e7b 1,3,5-6,8-25,28-31,35-80,82,84,86-87,89-118,120-142,144,146-147,149-153,155,157-174,176,178,180-184,186
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "afafa04f19acfedaa93240de4da593cfa16df8a8",
+  "prompts": {},
+  "humans": {
+    "h_de2c1989c48e7b": {
+      "author": "xspanni <xspanni@gmail.com>"
+    }
+  }
+}
