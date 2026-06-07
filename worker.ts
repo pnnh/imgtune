@@ -1,4 +1,4 @@
-import { Container } from "cloudflare:containers";
+import { Container } from "@cloudflare/containers";
 
 /**
  * ImgTuneApp — Cloudflare Container Durable Object
@@ -17,7 +17,11 @@ export class ImgTuneApp extends Container {
 
 interface Env {
   /** Binding name must match the durable_objects binding in wrangler.jsonc */
-  IMGTUNE_APP: DurableObjectNamespace<ImgTuneApp>;
+  IMGTUNE_APP: {
+    getByName(name: string): {
+      fetch(request: Request): Promise<Response>;
+    };
+  };
 }
 
 /**
@@ -27,8 +31,7 @@ interface Env {
  */
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const id = env.IMGTUNE_APP.idFromName("main");
-    const stub = env.IMGTUNE_APP.get(id);
-    return stub.fetch(request);
+    const container = env.IMGTUNE_APP.getByName("main");
+    return container.fetch(request);
   },
 } satisfies ExportedHandler<Env>;
