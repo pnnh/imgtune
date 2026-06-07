@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "imgtune",
+  "compatibility_date": "2026-06-07",
+
+  // Worker entry point — a thin proxy that routes requests to the container
+  "main": "worker.ts",
+
+  "observability": {
+    "enabled": true
+  },
+
+  // Durable Object binding — exposes the container class to the Worker
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "IMGTUNE_APP",
+        "class_name": "ImgTuneApp"
+      }
+    ]
+  },
+
+  // First-deploy migration required to register the new Durable Object class
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["ImgTuneApp"]
+    }
+  ],
+
+  // Container configuration — wrangler builds the image from ./Dockerfile
+  "containers": [
+    {
+      "class_name": "ImgTuneApp",
+      "max_instances": 5
+    }
+  ]
+}

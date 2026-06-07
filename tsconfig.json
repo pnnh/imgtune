@@ -30,5 +30,10 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    // worker.ts uses cloudflare:containers which is compiled by wrangler,
+    // not by the Next.js / tsc pipeline.
+    "worker.ts"
+  ]
 }

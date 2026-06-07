@@ -1,0 +1,23 @@
+# Dependencies and build artifacts
+node_modules
+.pnpm-store
+
+# Next.js build output (the builder stage copies what it needs directly)
+.next
+.open-next
+
+# Version control
+.git
+.gitignore
+
+# Development config files
+.env*.local
+*.code-workspace
+
+# OS / IDE
+.DS_Store
+.vscode
+
+# Test and CI artifacts
+coverage
+*.log

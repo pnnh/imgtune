@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"git.openRepositoryInParentFolders": "never",
+		"files.exclude": {
+			"**/.git": true
+		},
+		"chat.tools.terminal.autoApprove": {
+			"rtk": true,
+			"bd": true,
+			"cmake": true,
+			"mkdir": true,
+			"tar": true,
+			"sqlite3": true,
+			"pnpm": true
+		},
+		"search.useIgnoreFiles": false,
+		"search.exclude": {
+			"tsconfig.tsbuildinfo": true,
+			"build/**": true,
+			"**/node_modules/**": true,
+			"**/target/**": true, 
+			"**/.dolt/**": true,
+			"**/.vscode/**": true,
+			"**/.next/**": true,
+			"**/.beads/**": true,
+			"**/.idea/**": true,
+		}
+	}
+}
