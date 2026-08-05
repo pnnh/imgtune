@@ -1,0 +1,28 @@
+tsconfig.json
+  h_de2c1989c48e7b 35
+worker.ts
+  h_de2c1989c48e7b 1,20-24,34-35
+package.json
+  s_eebc518ac3a365::t_de4f4a6a97c136 13,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "221a050fb0013105f0713e5373c893378e8ae595",
+  "prompts": {},
+  "humans": {
+    "h_de2c1989c48e7b": {
+      "author": "xspanni <xspanni@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_eebc518ac3a365": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "1d36ecfd-ac50-4b14-9b44-9d8f8e764a4a",
+        "model": "gpt-5.3-codex"
+      },
+      "human_author": "xspanni <xspanni@gmail.com>"
+    }
+  }
+}

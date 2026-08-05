@@ -1,0 +1,16 @@
+.github/workflows/deploy-cloudflare-containers.yml
+  h_de2c1989c48e7b 23
+wrangler.jsonc
+  h_de2c1989c48e7b 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "1f9863034e0569016951b800300935cbedfb6eca",
+  "prompts": {},
+  "humans": {
+    "h_de2c1989c48e7b": {
+      "author": "xspanni <xspanni@gmail.com>"
+    }
+  }
+}

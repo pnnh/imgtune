@@ -1,0 +1,14 @@
+wrangler.jsonc
+  h_de2c1989c48e7b 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "45b05de73d0139e56231c958bf169fe9fdeb8dff",
+  "prompts": {},
+  "humans": {
+    "h_de2c1989c48e7b": {
+      "author": "xspanni <xspanni@gmail.com>"
+    }
+  }
+}
