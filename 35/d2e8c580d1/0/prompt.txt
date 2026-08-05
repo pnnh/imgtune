@@ -1,0 +1,71 @@
+/speckit.constitution 
+添加以下核心原则（标记为 NON-NEGOTIABLE）：
+
+1. 文档语言强制要求：
+   - 所有 Spec Kit 生成的文档（spec.md、plan.md、tasks.md、checklist、analyze 报告、constitution.md 等）必须使用简体中文输出。
+   - 包括：标题、章节、用户故事、验收标准、任务描述、说明文字、注释等全部中文。
+   - 技术标识符（变量名、类名、文件路径、命令名、代码块中的代码本身）保持英文。
+   - 代码示例中的注释建议使用中文。
+
+2. 此原则优先于其他任何默认行为，后续所有命令必须严格遵守。
+
+---
+
+/speckit.constitution 
+添加以下核心原则（标记为 NON-NEGOTIABLE）：
+
+1. 文档语言强制要求：
+   - 所有 Spec Kit 生成的文档（spec.md、plan.md、tasks.md、checklist、analyze 报告、constitution.md 等）必须使用简体中文输出。
+   - 包括：标题、章节、用户故事、验收标准、任务描述、说明文字、注释等全部中文。
+   - 技术标识符（变量名、类名、文件路径、命令名、代码块中的代码本身）保持英文。
+   - 代码示例中的注释建议使用中文。
+
+2. 此原则优先于其他任何默认行为，后续所有命令必须严格遵守。
+
+---
+
+/speckit.plan
+
+---
+
+/speckit.plan
+
+---
+
+/speckit.tasks
+
+---
+
+/speckit.tasks
+
+---
+
+/speckit.implement
+
+---
+
+/speckit.implement
+
+---
+
+[Terminal 0b881437-39f8-4380-bc99-897ac0eac917 notification: command completed. The terminal has been cleaned up.]
+Terminal output:
+  ~/Projects/github/imgtune   main !30 ?13                        17:21:14
+❯  pnpm install 2>&1 | tail -5
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 33.4s using pnpm v10.33.0
+
+---
+
+[Terminal 0b881437-39f8-4380-bc99-897ac0eac917 notification: command completed. The terminal has been cleaned up.]
+Terminal output:
+  ~/Projects/github/imgtune   main !30 ?13                        17:21:14
+❯  pnpm install 2>&1 | tail -5
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 33.4s using pnpm v10.33.0
