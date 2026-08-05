@@ -1,0 +1,83 @@
+src/client/components/ImageConverter.tsx
+  h_6465a203f88bd5 1,4-5,26-30,33-34,87-89,163-168,174-180,183-186,190-191
+  h_6465a203f88bd5 31-32,90,169,181-182,187-189
+specs/002-browser-convert-offline/data-model.md
+  h_6465a203f88bd5 1-164
+_locales/pt_PT/messages.json
+  h_6465a203f88bd5 76-81
+package.json
+  h_6465a203f88bd5 10,12,14
+specs/002-browser-convert-offline/research.md
+  h_6465a203f88bd5 1-187
+_locales/ja/messages.json
+  h_6465a203f88bd5 76-81
+imgtune.code-workspace
+  h_6465a203f88bd5 39-44,57-58
+src/client/runtime/context.tsx
+  h_6465a203f88bd5 6,11-12,15,17,19,21
+  s_15405720e3b858::t_861c261adc5557 38
+_locales/es/messages.json
+  h_6465a203f88bd5 76-81
+src/client/convert/browserConvert.ts
+  s_15405720e3b858::t_6899075f55bc25 1-71
+vite.config.ts
+  h_6465a203f88bd5 57-60
+specs/002-browser-convert-offline/checklists/requirements.md
+  h_6465a203f88bd5 1-36
+_locales/fr/messages.json
+  h_6465a203f88bd5 76-81
+src/client/convert/capabilities.ts
+  h_6465a203f88bd5 1-61
+src/client/vite-env.d.ts
+  h_6465a203f88bd5 1-9
+specs/002-browser-convert-offline/quickstart.md
+  h_6465a203f88bd5 1-134
+src/client/convert/serverConvert.ts
+  h_6465a203f88bd5 1-30
+specs/002-browser-convert-offline/tasks.md
+  h_6465a203f88bd5 1-145
+_locales/zh_TW/messages.json
+  h_6465a203f88bd5 76-81
+specs/002-browser-convert-offline/contracts/convert-module.md
+  h_6465a203f88bd5 1-187
+specs/002-browser-convert-offline/spec.md
+  h_6465a203f88bd5 1-117
+.specify/feature.json
+  h_6465a203f88bd5 2
+specs/002-browser-convert-offline/plan.md
+  h_6465a203f88bd5 1-154
+src/client/i18n/types.ts
+  h_6465a203f88bd5 73-74
+  h_6465a203f88bd5 72
+_locales/zh_CN/messages.json
+  h_6465a203f88bd5 76-81
+_locales/de/messages.json
+  h_6465a203f88bd5 76-81
+.github/copilot-instructions.md
+  h_6465a203f88bd5 4
+_locales/en/messages.json
+  h_6465a203f88bd5 76-81
+src/client/convert/router.ts
+  h_6465a203f88bd5 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "4de22a25b6214fded429cbc5489140a5d6db7845",
+  "prompts": {},
+  "humans": {
+    "h_6465a203f88bd5": {
+      "author": "larry <xspanni@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_15405720e3b858": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "e28ef570-de07-4211-9180-d379acc8ce8b",
+        "model": "claude-sonnet-4.6"
+      },
+      "human_author": "larry <xspanni@gmail.com>"
+    }
+  }
+}
