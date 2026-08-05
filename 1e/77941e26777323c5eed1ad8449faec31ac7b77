@@ -1,0 +1,70 @@
+.claude/skills/speckit-agent-context-update/SKILL.md
+  h_6465a203f88bd5 2,4-7
+.claude/skills/speckit-analyze/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,60,66,72,202,204,219
+.claude/skills/speckit-checklist/SKILL.md
+  h_6465a203f88bd5 2-10,13,53,81,262,354
+.claude/skills/speckit-clarify/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,62,66,70,144-149,234,255,286
+.claude/skills/speckit-constitution/SKILL.md
+  h_6465a203f88bd5 2-10,13,22-40,51,79,105,112,118,120,122,124,149
+.claude/skills/speckit-converge/SKILL.md
+  h_6465a203f88bd5 2-9,12,32,70-71,85,99,106-107,236,253
+.claude/skills/speckit-implement/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,52,60,154,180,194
+.claude/skills/speckit-plan/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,60,84,109,158,162
+.claude/skills/speckit-specify/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,60,108,111,144,146,152,156,158,163,165,174,176,181,183-184,208,210,212,214,221,250,279
+.claude/skills/speckit-tasks/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,52,60,104,163
+.claude/skills/speckit-taskstoissues/SKILL.md
+  h_6465a203f88bd5 2-10,13,32,60,90
+.specify/extensions/.registry
+  h_6465a203f88bd5 11
+.specify/init-options.json
+  h_6465a203f88bd5 2-3,6-9
+.specify/integration.json
+  h_6465a203f88bd5 2,5,8-10,13-14
+.specify/integrations/claude.manifest.json
+  h_6465a203f88bd5 1-17
+.specify/integrations/speckit.manifest.json
+  h_6465a203f88bd5 3,6-10,12-13,15-20
+.specify/scripts/bash/check-prerequisites.sh
+  h_6465a203f88bd5 60,63,66,81-88,123,129,136,185,191
+.specify/scripts/bash/common.sh
+  h_6465a203f88bd5 100-106,112-113,118-119,164-172,189-193,210-218,247,250-257,262,267-269,285,288-289,293-342
+.specify/scripts/bash/create-new-feature.sh
+  h_6465a203f88bd5 11,52-54,67,97-110,115,123-127,132,136-146,153-182,199,202,204-205,211,216-219,224,229,266-276,280-283,289-316,321-323,358-359,389-390
+.specify/scripts/bash/setup-plan.sh
+  h_6465a203f88bd5 11-12,14,18,20-21,80
+.specify/scripts/bash/setup-tasks.sh
+  h_6465a203f88bd5 33,39
+.specify/scripts/python/check_prerequisites.py
+  h_6465a203f88bd5 1-207
+.specify/scripts/python/common.py
+  h_6465a203f88bd5 1-293
+.specify/scripts/python/create_new_feature.py
+  h_6465a203f88bd5 1-422
+.specify/scripts/python/setup_plan.py
+  h_6465a203f88bd5 1-86
+.specify/scripts/python/setup_tasks.py
+  h_6465a203f88bd5 1-145
+.specify/templates/checklist-template.md
+  h_6465a203f88bd5 7,9,12-13,18
+.specify/templates/plan-template.md
+  h_6465a203f88bd5 7,51-56
+.specify/templates/tasks-template.md
+  h_6465a203f88bd5 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "1e77941e26777323c5eed1ad8449faec31ac7b77",
+  "prompts": {},
+  "humans": {
+    "h_6465a203f88bd5": {
+      "author": "larry <xspanni@gmail.com>"
+    }
+  }
+}
