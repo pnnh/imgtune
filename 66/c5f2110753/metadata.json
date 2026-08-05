@@ -1,0 +1,54 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "66c5f2110753",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".github/copilot-instructions.md",
+    ".specify/feature.json",
+    "_locales/de/messages.json",
+    "_locales/en/messages.json",
+    "_locales/es/messages.json",
+    "_locales/fr/messages.json",
+    "_locales/ja/messages.json",
+    "_locales/pt_PT/messages.json",
+    "_locales/zh_CN/messages.json",
+    "_locales/zh_TW/messages.json",
+    "imgtune.code-workspace",
+    "package.json",
+    "specs/002-browser-convert-offline/checklists/requirements.md",
+    "specs/002-browser-convert-offline/contracts/convert-module.md",
+    "specs/002-browser-convert-offline/data-model.md",
+    "specs/002-browser-convert-offline/plan.md",
+    "specs/002-browser-convert-offline/quickstart.md",
+    "specs/002-browser-convert-offline/research.md",
+    "specs/002-browser-convert-offline/spec.md",
+    "specs/002-browser-convert-offline/tasks.md",
+    "src/client/components/ImageConverter.tsx",
+    "src/client/convert/browserConvert.ts",
+    "src/client/convert/capabilities.ts",
+    "src/client/convert/router.ts",
+    "src/client/convert/serverConvert.ts",
+    "src/client/i18n/types.ts",
+    "src/client/runtime/context.tsx",
+    "src/client/vite-env.d.ts",
+    "vite.config.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/66/c5f2110753/0/metadata.json",
+      "transcript": "/66/c5f2110753/0/full.jsonl",
+      "compact_transcript": "/66/c5f2110753/0/transcript.jsonl",
+      "content_hash": "/66/c5f2110753/0/content_hash.txt",
+      "prompt": "/66/c5f2110753/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
