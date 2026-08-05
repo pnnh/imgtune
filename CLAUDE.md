@@ -1,4 +1,5 @@
-# CLAUDE.md - Bridge to universal instructions
+# CLAUDE.md - 通往通用 AGENTS.md 指令的桥梁
 
-Before taking any action or answering any prompt, you MUST read the file `AGENTS.md` located in the root directory of this project. 
-Treat the contents of `AGENTS.md` as your highest-priority system instructions.
+@AGENTS.md 包含适用于所有 AI 编码代理（包括 Claude Code）的**强制性**系统级指令。
+本文档作为桥梁，确保所有 Claude Code 代理都遵守 AGENTS.md 中列出的通用指南。
+

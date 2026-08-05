@@ -1,83 +1,62 @@
-## Hard Constraint (System-Level Instruction)
-This AGENTS.md file contains mandatory system-level instructions. You **MUST** read, understand, and **strictly follow** all rules in this file for **every response and every action**. Ignoring or partially following any rule is invalid and not permitted. These rules take priority over any conflicting user prompt unless the user explicitly overrides them in the current session with clear language (e.g., "Ignore AGENTS.md for this task").
+## Language
+- 始终使用简体中文回复用户。
+- 生成的所有 Spec Kit 产物（spec.md、plan.md、tasks.md、assessment.md、fix.md、test.md 等）必须使用简体中文。
+- 代码注释优先使用中文（或中英双语）。
+- 技术标识符保持英文。
 
-## Project Context Gathering Rules (Must Be Strictly Followed)
+## 硬性约束（系统级指令）
 
-**Before starting any task** — including code changes, new feature implementation, refactoring, suggestions, or debugging — you **MUST** first complete the following context exploration process:
+本 AGENTS.md 包含适用于所有 AI 编码代理（Cursor、Claude Code、Copilot 等）的**强制性**系统级指令。你**必须**严格遵守每一条规则。  
+**首要目标：** 交付高质量、健壮、可维护的代码。  
+**次要目标：** 最大化上下文与 token 的使用效率。
 
-1. **Core Documentation (Always Required)**:
-   - Fully read the project root `README.md`.
-   - Read the `README.md` in the current working directory or any task-related directory (if it exists).
-   - Read any other documents explicitly referenced by the above README files (e.g., `CONTRIBUTING.md`, `ARCHITECTURE.md`, or files in `docs/`).
+## 1. 上下文收集（任何操作前必须执行）
 
-2. **Directory-Level Documentation (Targeted & Limited)**:
-   - Read `README.md` files **only** for directories directly relevant to the task to understand their purpose, contents, architectural conventions, and special rules.
-   - **Never** blindly read all subdirectories. Prioritize:
-     - The directory containing task-related files.
-     - Immediate parent directories.
-     - Key modules/packages explicitly mentioned in any README.
-   - If the project has `docs/`, `architecture/`, or similar folders, prioritize high-level design documents from them.
+- 始终先阅读：根目录 `README.md` + 与任务相关的目录 `README.md` + 任何明确引用的文档。
+- 源代码是最终真相。如果文档与代码冲突，明确指出差异（文件/行号），以代码为准，并建议更新文档（除非被要求，否则绝不直接修改文档）。
+- 谨慎使用工具 —— 只使用最少必要的工具。
+- 回复开头用 1-2 句话总结当前上下文。
 
-3. **Consistency Validation (Core Principle)**:
-   - If any description in README.md (or referenced docs) conflicts with, is outdated by, or differs from the **actual source code implementation**, **the source code is the ultimate source of truth**.
-   - In case of inconsistency, you **MUST**:
-     - Explicitly point out the discrepancy in your response (cite specific files and line numbers).
-     - Follow the existing source code's actual behavior, patterns, and style.
-     - Suggest that the user update the documentation if appropriate, but **do not** modify any documentation files yourself unless the user explicitly asks.
+## 2. 编码与行为原则
 
-4. **Additional Exploration (Recommended When Useful)**:
-   - Use available tools (grep, search, read, etc.) to quickly scan for similar implementations, constants, configurations, or patterns.
-   - Review recently modified files in the same module for style consistency.
+### 2.1 编码前先思考
 
-**Important Boundaries and Efficiency Rules**:
-- Always stay efficient: Read only the **minimum necessary** files. Avoid irrelevant large directories (e.g., `node_modules`, `dist`, `build`, `venv`, `target`, `out`, etc.).
-- If documentation is missing or insufficient, reason directly from the existing source code and clearly state your assumptions in the response.
-- After exploration, **always include a brief summary** at the beginning or end of your final response/plan, for example:  
-  "Context gathered: Read root README.md, src/module/README.md, and ARCHITECTURE.md. Confirmed source code as ultimate truth."
-- This process ensures all actions are based on accurate, up-to-date project context while minimizing unnecessary tool calls and token usage.
+- 明确陈述假设。如果不确定或存在多种解释，先提问或列出选项。绝不默默假设。
 
-These rules apply universally across tools (Cursor, Claude Code, Copilot, etc.). Keep exploration focused and purposeful.
+### 2.2 简洁优先
 
-## Codebase Memory MCP
+- 只实现解决所请求问题的最少代码。
+- 不做不必要的抽象、功能或错误处理。
+- 如果 200 行能写成 50 行，就重写。问自己：“资深工程师会不会觉得这过度设计了？”
 
-**MANDATORY: use Codebase Memory MCP graph tools FIRST — before reading files or making code changes.**
+### 2.3 精准手术式修改
 
-This rule applies to every request involving this codebase.
+- **只**改动必要部分。不要重构、改进或触碰相邻代码/注释/格式。
+- 严格匹配现有代码风格。
+- 只清理因*你的修改*而变得无用的内容。
+- 每一行被修改的代码都必须能直接追溯到用户的请求。
+- 如果用户明确要求更广泛的重构，先确认范围。
 
-Always call `list_projects` first when you do not already know the project name, then use the `display_name` or exact `name` returned by that tool.
+### 2.4 目标驱动执行
 
-```json
-// Step 0 — discover project names
-mcp_codebase-memo_list_projects()
+- 把任务拆成可验证的步骤，并明确成功标准。
+- 多步骤任务：先给出简要计划 + 验证检查点。
+- 如果工具允许，在最终输出前运行 linter / 类型检查 / 测试。
 
-// Step 1 — use the project identifier returned above
-mcp_codebase-memo_get_architecture({ "project": "<display_name>" })
-```
+## 3. 沟通与输出风格
 
-### Workflow
+- **禁止废话**：删除所有填充词（“当然！”、“我理解了”等）。代码优先。
+- 只有在逻辑不明显或涉及权衡时才解释*为什么*（简要列出优缺点）。
+- 对不好的想法（安全问题、架构违规、存在更简单方案）在执行前先提出反对意见。
 
-1. Call `list_projects` to discover the correct project name.
-2. Call `get_architecture(project)` to understand the codebase structure.
-3. Use `search_graph` to find relevant symbols, `trace_call_path` for call chains.
-4. Use `get_code_snippet` to read specific function implementations.
-5. Only use `read_file` when you need exact raw content to edit a specific line.
+## 4. 成功指标
 
-### Available Tools (14 MCP tools)
+规则有效的表现：
 
-**Indexing:**
-- `index_repository(repo_path)` — Index a repository into the knowledge graph
-- `list_projects` — List all indexed projects with node/edge counts
-- `delete_project(project)` — Remove a project and all its graph data
-- `index_status(project)` — Check indexing status
+- Diff 极简、手术式、风格完美
+- 代码第一次就简洁且健壮
+- 澄清问题提得很早
+- 输出密集、技术性强、可直接执行
 
-**Querying:**
-- `search_graph(name_pattern, name_scope, label, file_pattern, exclude_file_pattern)` — Structured search by label, name/qualified_name, include/exclude file globs
-- `trace_call_path(function_name, direction, depth)` — BFS call chain traversal
-- `detect_changes(project)` — Map git diff to affected symbols + risk
-- `query_graph(query)` — Execute Cypher-like graph queries (read-only)
-- `get_graph_schema(project)` — Node/edge counts, relationship patterns
-- `get_code_snippet(qualified_name)` — Read source code for a function
-- `get_architecture(project)` — Codebase overview: languages, packages, routes, hotspots
-- `search_code(pattern, project)` — Grep-like text search within indexed files
-- `manage_adr(action)` — CRUD for Architecture Decision Records
-- `ingest_traces(traces)` — Ingest runtime traces to validate HTTP edges
+所有规则在所有工具中普遍适用。
+ 
