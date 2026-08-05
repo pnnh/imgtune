@@ -73,5 +73,11 @@
     },
     "savedSize": {
         "message": "已節省"
+    },
+    "gifFirstFrameWarning": {
+        "message": "偵測到 GIF 圖片：將僅轉換第一幀"
+    },
+    "webpNotSupported": {
+        "message": "您的瀏覽器不支援 WebP 格式輸出"
     }
 }

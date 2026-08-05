@@ -36,7 +36,12 @@
 			"/^bash \\.specify/scripts/bash/check-prerequisites\\.sh --json 2>&1$/": {
 				"approve": true,
 				"matchCommandLine": true
-			}
+			},
+			"/^bash \\.specify/scripts/bash/setup-tasks\\.sh --json 2>/dev/null$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"q": true
 		},
 		"search.useIgnoreFiles": false,
 		"search.exclude": {
@@ -49,6 +54,8 @@
 			"**/.next/**": true,
 			"**/.beads/**": true,
 			"**/.idea/**": true,
+			"dist/**": true,
+			"dist-*/**": true
 		}
 	}
 }

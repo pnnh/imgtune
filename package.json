@@ -7,8 +7,11 @@
     "dev:web": "vite",
     "dev:server": "tsx watch src/server/index.ts",
     "build:web": "VITE_BUILD_TARGET=web vite build",
+    "build:web:offline": "VITE_BUILD_TARGET=web VITE_OFFLINE=true vite build",
     "build:extension": "VITE_BUILD_TARGET=extension vite build",
+    "build:extension:offline": "VITE_BUILD_TARGET=extension VITE_OFFLINE=true vite build",
     "build:webview": "VITE_BUILD_TARGET=webview vite build",
+    "build:webview:offline": "VITE_BUILD_TARGET=webview VITE_OFFLINE=true vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "build": "pnpm build:web && pnpm build:server",
     "preview": "vite preview"

@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef, DragEvent, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, useMemo, DragEvent, ChangeEvent } from "react";
 import { getMessage } from "../i18n/adapter.js";
 import { useRuntime } from "../runtime/context.js";
+import { routeConversion } from "../convert/router.js";
+import { computeCapabilityMatrix, checkWebPOutputSupport } from "../convert/capabilities.js";
 
 type TargetFormat = "jpg" | "png" | "webp" | "gif";
 
@@ -21,6 +23,15 @@ export default function ImageConverter() {
     const [resultUrl, setResultUrl] = useState("");
     const [resultDimensions, setResultDimensions] = useState<{ width: number; height: number } | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [webpSupported, setWebpSupported] = useState<boolean | null>(null);
+    const capabilityMatrix = useMemo(
+        () => computeCapabilityMatrix(capabilities.hasBackend),
+        [capabilities.hasBackend],
+    );
+
+    useEffect(() => {
+        checkWebPOutputSupport().then(setWebpSupported);
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -73,18 +84,10 @@ export default function ImageConverter() {
         setConverting(true); setError("");
         if (resultUrl) { URL.revokeObjectURL(resultUrl); setResultUrl(""); setResultBlob(null); setResultDimensions(null); }
         try {
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("targetFormat", targetFormat);
-            formData.append("quality", quality.toString());
-            formData.append("compressionLevel", compressionLevel.toString());
-            formData.append("lossless", lossless.toString());
-            const response = await fetch("/api/convert", { method: "POST", body: formData });
-            if (!response.ok) {
-                const err = await response.json();
-                throw new Error(err.error || getMessage("conversionFailed"));
-            }
-            const blob = await response.blob();
+            const { blob } = await routeConversion(
+                { file, targetFormat: targetFormat === "jpg" ? "jpeg" : targetFormat, quality, lossless, compressionLevel },
+                capabilityMatrix,
+            );
             setResultBlob(blob);
             const url = URL.createObjectURL(blob);
             setResultUrl(url);
@@ -119,21 +122,6 @@ export default function ImageConverter() {
         const diff = file.size - resultBlob.size;
         return { saved: diff > 0, percent: Math.abs((diff / file.size) * 100).toFixed(1), size: formatBytes(Math.abs(diff)) };
     })();
-
-    // 在不支持后端的环境中，显示提示而非转换功能
-    if (!capabilities.canConvertImages) {
-        return (
-            <div className="w-full max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
-                <div className="bg-gray-50 border border-gray-200 rounded-2xl p-10">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">{getMessage("siteName")}</h3>
-                    <p className="text-sm text-gray-500">{getMessage("siteTagline")}</p>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="w-full max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8" data-requires-backend>
@@ -172,13 +160,35 @@ export default function ImageConverter() {
                             </div>
                         </div>
 
+                        {/* GIF 首帧警告 */}
+                        {file?.type === "image/gif" && targetFormat !== "gif" && (
+                            <div className="bg-amber-50 border border-amber-200 text-amber-700 rounded-xl px-4 py-3 text-sm">
+                                {getMessage("gifFirstFrameWarning")}
+                            </div>
+                        )}
+
                         {/* 目标格式选择 */}
                         <div className="space-y-4">
                             <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">{getMessage("selectTargetFormat")}</h3>
                             <div className="grid grid-cols-4 gap-2 bg-gray-50 dark:bg-gray-950/40 p-1.5 rounded-xl border border-gray-100">
-                                {(["jpg", "png", "webp", "gif"] as TargetFormat[]).map((f) => (
-                                    <button key={f} onClick={() => setTargetFormat(f)} className={`py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${targetFormat === f ? "bg-white text-blue-600 shadow-sm border border-gray-100" : "text-gray-500 hover:text-gray-800"}`}>{f.toUpperCase()}</button>
-                                ))}
+                                {(["jpg", "png", "webp", "gif"] as TargetFormat[]).map((f) => {
+                                    const inputFmt = (file?.type ?? "image/jpeg").split("/")[1]!.replace(/^jpe?g$/, "jpeg");
+                                    const outFmt = f === "jpg" ? "jpeg" : f;
+                                    const cap = capabilityMatrix[`${inputFmt}\u2192${outFmt}`] ?? { strategy: "browser" as const };
+                                    const disabled = cap.strategy === "unavailable" || (f === "webp" && webpSupported === false);
+                                    const title = f === "webp" && webpSupported === false ? getMessage("webpNotSupported") : undefined;
+                                    return (
+                                        <button
+                                            key={f}
+                                            onClick={() => !disabled && setTargetFormat(f)}
+                                            disabled={disabled}
+                                            title={title}
+                                            className={`py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${disabled ? "text-gray-300 cursor-not-allowed" : targetFormat === f ? "bg-white text-blue-600 shadow-sm border border-gray-100" : "text-gray-500 hover:text-gray-800"}`}
+                                        >
+                                            {f.toUpperCase()}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
 

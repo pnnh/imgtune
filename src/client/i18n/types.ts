@@ -69,4 +69,6 @@ export type MessageKey =
   | "fileSize"
   | "dimensions"
   | "closePreview"
-  | "savedSize";
+  | "savedSize"
+  | "gifFirstFrameWarning"
+  | "webpNotSupported";

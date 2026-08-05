@@ -73,5 +73,11 @@
     },
     "savedSize": {
         "message": "削減量"
+    },
+    "gifFirstFrameWarning": {
+        "message": "GIF画像を検出しました：最初のフレームのみ変換されます"
+    },
+    "webpNotSupported": {
+        "message": "お使いのブラウザはWebP出力をサポートしていません"
     }
 }

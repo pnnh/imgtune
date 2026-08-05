@@ -3,20 +3,22 @@ import type { RuntimeContext, RuntimeType } from "./detect.js";
 
 export interface PlatformCapabilities {
     canConvertImages: boolean;
+    hasBackend: boolean;
     canInstallPwa: boolean;
     router: "browser" | "hash";
 }
 
-function computeCapabilities(type: RuntimeType): PlatformCapabilities {
+function computeCapabilities(runtime: RuntimeContext): PlatformCapabilities {
+    const { type, hasBackend } = runtime;
     switch (type) {
         case "web":
-            return { canConvertImages: true, canInstallPwa: true, router: "browser" };
+            return { canConvertImages: true, hasBackend, canInstallPwa: true, router: "browser" };
         case "pwa":
-            return { canConvertImages: true, canInstallPwa: false, router: "browser" };
+            return { canConvertImages: true, hasBackend, canInstallPwa: false, router: "browser" };
         case "extension":
-            return { canConvertImages: false, canInstallPwa: false, router: "hash" };
+            return { canConvertImages: true, hasBackend, canInstallPwa: false, router: "hash" };
         case "webview":
-            return { canConvertImages: false, canInstallPwa: false, router: "browser" };
+            return { canConvertImages: true, hasBackend, canInstallPwa: false, router: "browser" };
     }
 }
 
@@ -33,7 +35,7 @@ interface RuntimeProviderProps {
 }
 
 export function RuntimeProvider({ runtime, children }: RuntimeProviderProps) {
-    const capabilities = computeCapabilities(runtime.type);
+    const capabilities = computeCapabilities(runtime);
     return <Ctx.Provider value={{ runtime, capabilities }}>{children}</Ctx.Provider>;
 }
 

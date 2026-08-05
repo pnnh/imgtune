@@ -73,5 +73,11 @@
     },
     "savedSize": {
         "message": "Ahorrado"
+    },
+    "gifFirstFrameWarning": {
+        "message": "Imagen GIF detectada: solo se convertirá el primer fotograma"
+    },
+    "webpNotSupported": {
+        "message": "La salida WebP no es compatible con su navegador"
     }
 }
