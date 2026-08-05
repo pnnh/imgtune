@@ -1,0 +1,77 @@
+{
+    "siteName": {
+        "message": "ImgTune"
+    },
+    "siteTagline": {
+        "message": "無料オンライン画像変換・処理ツール"
+    },
+    "siteDescription": {
+        "message": "ImgTuneは、シンプルで強力なオンライン画像変換ツールです。ブラウザ上でJPG、PNG、WEBP、GIF形式を即座に相互変換できます。画質や圧縮パラメーターもカスタマイズ可能です。"
+    },
+    "homeTitle": {
+        "message": "ImgTune — 無料オンライン画像変換器"
+    },
+    "homeDescription": {
+        "message": "ブラウザ上でJPG、PNG、WEBP、GIF画像を簡単に変換できます。高速で安全、パラメーター調整とリアルタイムプレビューをサポート。"
+    },
+    "changeLanguage": {
+        "message": "言語"
+    },
+    "dragDropText": {
+        "message": "画像をここにドラッグ＆ドロップするか、クリックして選択してください"
+    },
+    "supportedFormats": {
+        "message": "対応フォーマット: JPG, PNG, WEBP, GIF (最大 10MB)"
+    },
+    "selectTargetFormat": {
+        "message": "出力フォーマット"
+    },
+    "conversionParameters": {
+        "message": "パラメーター設定"
+    },
+    "quality": {
+        "message": "画質"
+    },
+    "compressionLevel": {
+        "message": "圧縮レベル"
+    },
+    "lossless": {
+        "message": "ロスレス変換 (無劣化)"
+    },
+    "defaultSettings": {
+        "message": "デフォルトの最適化設定を使用"
+    },
+    "convertButton": {
+        "message": "変換を開始"
+    },
+    "converting": {
+        "message": "変換中..."
+    },
+    "conversionSuccess": {
+        "message": "変換に成功しました！"
+    },
+    "conversionFailed": {
+        "message": "変換に失敗しました"
+    },
+    "originalPreview": {
+        "message": "元の画像"
+    },
+    "convertedPreview": {
+        "message": "変換後の画像"
+    },
+    "downloadButton": {
+        "message": "画像をダウンロード"
+    },
+    "fileSize": {
+        "message": "サイズ"
+    },
+    "dimensions": {
+        "message": "寸法"
+    },
+    "closePreview": {
+        "message": "別の画像を選択"
+    },
+    "savedSize": {
+        "message": "削減量"
+    }
+}

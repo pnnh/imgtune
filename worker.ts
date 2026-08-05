@@ -3,12 +3,14 @@ import { Container } from "@cloudflare/containers";
 /**
  * ImgTuneApp — Cloudflare Container Durable Object
  *
- * Each instance wraps a running Docker container (built from the project
- * Dockerfile) and proxies all inbound HTTP requests to it on port 3000.
- * Idle containers are put to sleep after 5 minutes to save resources.
+ * 每个实例封装一个运行 Docker 容器（由项目 Dockerfile 构建）并将所有入站
+ * HTTP 请求代理到容器内 Express.js 服务器（端口 3000）。
+ * 容器闲置 5 分钟后进入休眠以节省资源。
+ *
+ * 注：重构后容器内运行 Express.js（替代原 Next.js），Worker 代理逻辑无需修改。
  */
 export class ImgTuneApp extends Container {
-  /** Port the Next.js server inside the container listens on. */
+  /** Express.js 服务器在容器内监听的端口（与 src/server/index.ts 一致）。 */
   defaultPort = 3000;
 
   /** Put the container to sleep after 5 minutes of inactivity. */

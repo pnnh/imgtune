@@ -16,14 +16,34 @@
 			"mkdir": true,
 			"tar": true,
 			"sqlite3": true,
-			"pnpm": true
+			"pnpm": true,
+			"/^bash \\.specify/scripts/bash/check-prerequisites\\.sh --json --paths-only 2>&1$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^bash \\.specify/scripts/bash/setup-plan\\.sh --json 2>&1$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^bash \\.specify/scripts/bash/setup-tasks\\.sh --json 2>&1$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^bash \\.specify/scripts/bash/check-prerequisites\\.sh --json --require-tasks --include-tasks 2>&1$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^bash \\.specify/scripts/bash/check-prerequisites\\.sh --json 2>&1$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
 		},
 		"search.useIgnoreFiles": false,
 		"search.exclude": {
 			"tsconfig.tsbuildinfo": true,
 			"build/**": true,
 			"**/node_modules/**": true,
-			"**/target/**": true, 
+			"**/target/**": true,
 			"**/.dolt/**": true,
 			"**/.vscode/**": true,
 			"**/.next/**": true,

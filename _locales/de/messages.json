@@ -1,0 +1,77 @@
+{
+    "siteName": {
+        "message": "ImgTune"
+    },
+    "siteTagline": {
+        "message": "Kostenloser Online-Bildkonverter und -prozessor"
+    },
+    "siteDescription": {
+        "message": "ImgTune ist ein einfacher und leistungsstarker Online-Bildkonverter. Konvertieren Sie JPG, PNG, WEBP und GIF sofort in Ihrem Browser. Passen Sie Qualität und Komprimierung an."
+    },
+    "homeTitle": {
+        "message": "ImgTune — Kostenloser Online-Bildkonverter"
+    },
+    "homeDescription": {
+        "message": "Konvertieren Sie Bilder zwischen JPG, PNG, WEBP und GIF in Ihrem Browser. Schnell, sicher und mit anpassbaren Parametern."
+    },
+    "changeLanguage": {
+        "message": "Sprache"
+    },
+    "dragDropText": {
+        "message": "Ziehen Sie Ihr Bild hierher oder klicken Sie zum Auswählen"
+    },
+    "supportedFormats": {
+        "message": "Unterstützt JPG, PNG, WEBP, GIF (Max 10MB)"
+    },
+    "selectTargetFormat": {
+        "message": "Zielformat"
+    },
+    "conversionParameters": {
+        "message": "Parameter"
+    },
+    "quality": {
+        "message": "Qualität"
+    },
+    "compressionLevel": {
+        "message": "Komprimierungsstufe"
+    },
+    "lossless": {
+        "message": "Verlustfrei"
+    },
+    "defaultSettings": {
+        "message": "Standardeinstellungen"
+    },
+    "convertButton": {
+        "message": "Bild konvertieren"
+    },
+    "converting": {
+        "message": "Konvertierung läuft..."
+    },
+    "conversionSuccess": {
+        "message": "Konvertierung erfolgreich!"
+    },
+    "conversionFailed": {
+        "message": "Konvertierung fehlgeschlagen"
+    },
+    "originalPreview": {
+        "message": "Originalbild"
+    },
+    "convertedPreview": {
+        "message": "Konvertiertes Bild"
+    },
+    "downloadButton": {
+        "message": "Bild herunterladen"
+    },
+    "fileSize": {
+        "message": "Größe"
+    },
+    "dimensions": {
+        "message": "Abmessungen"
+    },
+    "closePreview": {
+        "message": "Anderes Bild wählen"
+    },
+    "savedSize": {
+        "message": "Gespart"
+    }
+}

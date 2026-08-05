@@ -1,0 +1,77 @@
+{
+    "siteName": {
+        "message": "ImgTune"
+    },
+    "siteTagline": {
+        "message": "免费在线图片格式转换与处理工具"
+    },
+    "siteDescription": {
+        "message": "ImgTune 是一个简单且强大的在线图片格式转换工具。在浏览器中即刻实现 JPG、PNG、WEBP 和 GIF 格式互转，支持自定义图像质量与压缩参数。"
+    },
+    "homeTitle": {
+        "message": "ImgTune — 免费在线图片格式转换器"
+    },
+    "homeDescription": {
+        "message": "在浏览器中轻松转换 JPG、PNG、WEBP 和 GIF 图片格式。快速、安全且支持参数调整与实时预览。"
+    },
+    "changeLanguage": {
+        "message": "语言"
+    },
+    "dragDropText": {
+        "message": "拖拽图片到这里，或点击选择图片"
+    },
+    "supportedFormats": {
+        "message": "支持 JPG, PNG, WEBP, GIF 格式 (最大 10MB)"
+    },
+    "selectTargetFormat": {
+        "message": "目标格式"
+    },
+    "conversionParameters": {
+        "message": "参数设置"
+    },
+    "quality": {
+        "message": "图像质量"
+    },
+    "compressionLevel": {
+        "message": "压缩级别"
+    },
+    "lossless": {
+        "message": "无损转换"
+    },
+    "defaultSettings": {
+        "message": "使用默认优化设置"
+    },
+    "convertButton": {
+        "message": "开始转换"
+    },
+    "converting": {
+        "message": "正在转换..."
+    },
+    "conversionSuccess": {
+        "message": "转换成功！"
+    },
+    "conversionFailed": {
+        "message": "转换失败"
+    },
+    "originalPreview": {
+        "message": "原始图片"
+    },
+    "convertedPreview": {
+        "message": "转换后图片"
+    },
+    "downloadButton": {
+        "message": "下载图片"
+    },
+    "fileSize": {
+        "message": "大小"
+    },
+    "dimensions": {
+        "message": "尺寸"
+    },
+    "closePreview": {
+        "message": "选择其他图片"
+    },
+    "savedSize": {
+        "message": "已节省"
+    }
+}
