@@ -1,0 +1,62 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "3631dd997522",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 10,
+  "files_touched": [
+    ".qoder/commands/speckit.analyze.md",
+    ".qoder/commands/speckit.checklist.md",
+    ".qoder/commands/speckit.clarify.md",
+    ".qoder/commands/speckit.constitution.md",
+    ".qoder/commands/speckit.converge.md",
+    ".qoder/commands/speckit.implement.md",
+    ".qoder/commands/speckit.plan.md",
+    ".qoder/commands/speckit.specify.md",
+    ".qoder/commands/speckit.tasks.md",
+    ".qoder/commands/speckit.taskstoissues.md",
+    ".specify/integration.json",
+    ".specify/integrations/qodercli.manifest.json",
+    "_locales/de/messages.json",
+    "_locales/en/messages.json",
+    "_locales/es/messages.json",
+    "_locales/fr/messages.json",
+    "_locales/ja/messages.json",
+    "_locales/pt_PT/messages.json",
+    "_locales/zh_CN/messages.json",
+    "_locales/zh_TW/messages.json",
+    "imgtune.code-workspace",
+    "package.json",
+    "specs/002-browser-convert-offline/contracts/convert-module.md",
+    "specs/002-browser-convert-offline/data-model.md",
+    "specs/002-browser-convert-offline/plan.md",
+    "specs/002-browser-convert-offline/quickstart.md",
+    "specs/002-browser-convert-offline/research.md",
+    "specs/002-browser-convert-offline/spec.md",
+    "specs/002-browser-convert-offline/tasks.md",
+    "src/client/components/ImageConverter.tsx",
+    "src/client/convert/capabilities.ts",
+    "src/client/convert/router.ts",
+    "src/client/convert/serverConvert.ts",
+    "src/client/i18n/types.ts",
+    "src/client/runtime/detect.ts",
+    "src/client/vite-env.d.ts",
+    "vite.config.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/36/31dd997522/0/metadata.json",
+      "transcript": "/36/31dd997522/0/full.jsonl",
+      "compact_transcript": "/36/31dd997522/0/transcript.jsonl",
+      "content_hash": "/36/31dd997522/0/content_hash.txt",
+      "prompt": "/36/31dd997522/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
