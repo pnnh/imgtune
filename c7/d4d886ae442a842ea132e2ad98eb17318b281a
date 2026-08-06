@@ -1,0 +1,133 @@
+specs/002-browser-convert-offline/tasks.md
+  s_15405720e3b858::t_84737ee4967f29 146-152
+  s_15405720e3b858::t_0f3ba866429d8f 168
+  s_15405720e3b858::t_524e4ccba3d990 153-160
+  s_15405720e3b858::t_8cb3ca964a9347 161-167
+specs/002-browser-convert-offline/contracts/convert-module.md
+  s_15405720e3b858::t_af7c0c16955fe0 3-4
+  s_15405720e3b858::t_98e2c94e026e55 28,35,37
+  s_15405720e3b858::t_dae2db86dbf36c 87,96-98
+  s_15405720e3b858::t_a885f3df046b5d 168,170,176-182
+  s_15405720e3b858::t_ac43710f9e24b4 124,127-128
+src/client/runtime/detect.ts
+  s_15405720e3b858::t_affb3e843870e1 36,38
+  s_15405720e3b858::t_1c57ac71de7ce4 50-51
+src/client/convert/router.ts
+  s_15405720e3b858::t_0509af57d546f0 24,28
+_locales/pt_PT/messages.json
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+src/client/convert/capabilities.ts
+  s_15405720e3b858::t_0509af57d546f0 27
+_locales/de/messages.json
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+_locales/ja/messages.json
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+specs/002-browser-convert-offline/research.md
+  s_15405720e3b858::t_597c0f6e671db0 125,129-134,137,139,143,145,147,153-154,160,164,168
+  s_15405720e3b858::t_dc9d07d653ddd5 1,3-4
+  s_15405720e3b858::t_35bc257ccba06c 62,64,68,70,72,77-97,101,103-104,108-109
+.graphifyignore
+  h_6465a203f88bd5 1-194
+specs/002-browser-convert-offline/quickstart.md
+  s_15405720e3b858::t_5617a8763d65ee 126-130
+  s_15405720e3b858::t_10fd609d56d22d 21,23,40
+  s_15405720e3b858::t_22908eeb8f2821 74-75,80,82,85-86,88,91,95-98
+  s_15405720e3b858::t_4a2ddd2620305b 1,3-4
+_locales/fr/messages.json
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+_locales/en/messages.json
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+src/client/convert/serverConvert.ts
+  s_15405720e3b858::t_9d561ad1e93832 4-6,11-13,21-26,28-59,61
+specs/002-browser-convert-offline/plan.md
+  s_15405720e3b858::t_21320c120f807a 68,70-71,74,76-79,81-84
+  s_15405720e3b858::t_a33b3f1b92d975 11
+  s_15405720e3b858::t_dd3e048bbd7e8f 31
+  s_15405720e3b858::t_c628fe1aeac77b 1,3
+  s_15405720e3b858::t_b7053bd6fcff5a 103-107,109
+specs/002-browser-convert-offline/data-model.md
+  s_15405720e3b858::t_cc782355f877fe 48,50-51
+  s_15405720e3b858::t_67dc8fec24059c 95
+  s_15405720e3b858::t_558b43b7c96f28 136,138
+  s_15405720e3b858::t_3493d238418926 1,3-4
+  s_15405720e3b858::t_0431a3079aadcc 26
+  s_15405720e3b858::t_11291014f2a6a6 105,114-116,121-122
+imgtune.code-workspace
+  h_6465a203f88bd5 58-59
+_locales/zh_CN/messages.json
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+_locales/zh_TW/messages.json
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+.gitignore
+  h_6465a203f88bd5 47-48
+  h_6465a203f88bd5 46
+src/client/components/ImageConverter.tsx
+  s_15405720e3b858::t_ad95e1759b1237 170-176
+specs/002-browser-convert-offline/spec.md
+  s_15405720e3b858::t_fead5a03dc5a32 1
+  s_15405720e3b858::t_6951176f258365 73-74
+  s_15405720e3b858::t_6c33596c9bdece 13
+  s_15405720e3b858::t_07271ca23683e2 95
+  s_15405720e3b858::t_3bab6e260b6ce2 52,54,56,58,62-64
+  s_15405720e3b858::t_285e9638ea77c6 103-104,107
+  s_15405720e3b858::t_2a68f5841b62c2 83-87
+  s_15405720e3b858::t_64ca37df06ce5f 117-128
+_locales/es/messages.json
+  s_15405720e3b858::t_81d9eba0de1f16 88-90
+  s_15405720e3b858::t_78e2d12dbcae5c 82-87
+src/client/i18n/types.ts
+  s_15405720e3b858::t_dfe33fe6d9b1a4 76-77
+  s_15405720e3b858::t_7f22eb2820d90a 74-75
+.qoder/commands/speckit.analyze.md
+  h_6465a203f88bd5 1-251
+.qoder/commands/speckit.checklist.md
+  h_6465a203f88bd5 1-365
+.qoder/commands/speckit.clarify.md
+  h_6465a203f88bd5 1-287
+.qoder/commands/speckit.constitution.md
+  h_6465a203f88bd5 1-164
+.qoder/commands/speckit.converge.md
+  h_6465a203f88bd5 1-269
+.qoder/commands/speckit.implement.md
+  h_6465a203f88bd5 1-215
+.qoder/commands/speckit.plan.md
+  h_6465a203f88bd5 1-166
+.qoder/commands/speckit.specify.md
+  h_6465a203f88bd5 1-345
+.qoder/commands/speckit.tasks.md
+  h_6465a203f88bd5 1-215
+.qoder/commands/speckit.taskstoissues.md
+  h_6465a203f88bd5 1-102
+.specify/integration.json
+  h_6465a203f88bd5 5-6,12-15
+.specify/integrations/qodercli.manifest.json
+  h_6465a203f88bd5 1-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "c7d4d886ae442a842ea132e2ad98eb17318b281a",
+  "prompts": {},
+  "humans": {
+    "h_6465a203f88bd5": {
+      "author": "larry <xspanni@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_15405720e3b858": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "e28ef570-de07-4211-9180-d379acc8ce8b",
+        "model": "claude-sonnet-4.6"
+      },
+      "human_author": "larry <xspanni@gmail.com>"
+    }
+  }
+}
