@@ -79,5 +79,14 @@
     },
     "webpNotSupported": {
         "message": "WebP output is not supported in your browser"
+    },
+    "backendError": {
+        "message": "Backend conversion failed ({status})"
+    },
+    "connectionTimeout": {
+        "message": "Connection timed out, please try again later"
+    },
+    "largeSizeWarning": {
+        "message": "Large file detected (>50MB). Browser processing may be slow due to memory limits."
     }
 }

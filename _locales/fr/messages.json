@@ -79,5 +79,14 @@
     },
     "webpNotSupported": {
         "message": "La sortie WebP n'est pas prise en charge par votre navigateur"
+    },
+    "backendError": {
+        "message": "Échec de la conversion backend ({status})"
+    },
+    "connectionTimeout": {
+        "message": "Délai de connexion dépassé, veuillez réessayer"
+    },
+    "largeSizeWarning": {
+        "message": "Fichier volumineux détecté (>50 Mo). Le traitement dans le navigateur peut être lent en raison des limites mémoire."
     }
 }

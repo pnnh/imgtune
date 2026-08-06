@@ -143,3 +143,26 @@ Phase 2 完成后：
 2. T011–T012（US2）→ 有后端时 GIF 输出恢复
 3. T013–T015（US3）→ OFFLINE 构建模式
 4. T016–T018（Polish）→ 全量验证收尾
+
+---
+
+## Phase 7: Convergence
+
+> 本阶段任务来源于 speckit.converge 对更新后规格（澄清 2026-08-06）与现有实现之间差距的评估。
+
+- [X] T019 更新 `src/client/runtime/detect.ts`：将 extension（第 38 行）和 webview（第 52 行）的 `hasBackend: false` 改为 `true` — 所有运行时类型均认为后端可访问 per FR-004（contradicts）
+- [X] T020 在 `src/client/i18n/types.ts` 的 `MessageKey` 联合类型中追加 `"backendError" | "connectionTimeout"`；并在全部 8 个 `_locales/*/messages.json` 中添加对应译文（backendError 格式如"后端转换失败 ({status})"，connectionTimeout 如"连接超时，请稍后重试"）per FR-005/FR-006（missing）
+- [X] T021 重构 `src/client/convert/serverConvert.ts`：① 将 `response.json()` 包裹在 try-catch 中处理非 JSON 响应（SC-005）；② 错误消息中包含 HTTP 状态码（使用 `getMessage("backendError")` 并插值状态码）（FR-005）；③ 用 `AbortController` 添加 30 秒请求超时，超时时 throw 含 `getMessage("connectionTimeout")` 的独立错误（FR-006）per FR-005, FR-006, SC-005（partial）
+- [X] T022 移除 `src/client/convert/capabilities.ts` 中的 OFFLINE 条件：将 `if (import.meta.env.OFFLINE || !hasBackend)` 替换为 `if (!hasBackend)` per 澄清 US3 scope（contradicts）
+- [X] T023 移除 `src/client/convert/router.ts` 中的 OFFLINE 条件：将 `if (import.meta.env.OFFLINE || capability.strategy === "browser")` 替换为 `if (capability.strategy === "browser")`；同步删除相关注释 per 澄清 US3 scope（contradicts）
+- [X] T024 删除或清空 `src/client/vite-env.d.ts` 中的 `OFFLINE` 类型声明（移除 `ImportMetaEnv` 中的 `readonly OFFLINE: boolean` 及冗余 `ImportMeta` 块）per 澄清 US3 scope（contradicts）
+- [X] T025 移除 `vite.config.ts` 中的 `define` 字段（`import.meta.env.OFFLINE` 注入）per 澄清 US3 scope（contradicts）
+- [X] T026 从 `package.json` 中删除 `build:web:offline`、`build:extension:offline`、`build:webview:offline` 三条脚本 per 澄清 US3 scope（contradicts）
+
+---
+
+## Phase 8: Convergence
+
+> 本阶段任务来源于 speckit.converge 第二轮评估（2026-08-06）。
+
+- [X] T027 在 `src/client/components/ImageConverter.tsx` 的 `handleFileSelect()` 中添加文件大小检查：当 `selectedFile.size > 50 * 1024 * 1024`（50MB）时展示性能警告横幅（需新增对应 i18n 键 `largeSizeWarning` 及 8 个语言译文），仍允许用户继续转换 per 规格边界情况 + quickstart 场景 6（partial）

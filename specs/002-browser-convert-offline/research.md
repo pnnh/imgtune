@@ -1,7 +1,7 @@
-# 研究报告：浏览器端图片转换与离线构建模式
+# 研究报告：浏览器端图片转换与服务端错误处理
 
-**阶段**: Phase 0 研究  
-**日期**: 2026-08-05  
+**阶段**: Phase 0 研究（已更新 2026-08-06）
+**日期**: 2026-08-05 / 更新: 2026-08-06
 **功能**: [spec.md](./spec.md)
 
 ---
@@ -59,43 +59,54 @@ const blob = await new Promise<Blob>(resolve =>
 | GIF | JPEG | ✓ | 仅第一帧，需提示用户 |
 | GIF | PNG | ✓ | 仅第一帧，需提示用户 |
 | GIF | WebP | ✓ | 仅第一帧，需提示用户 |
-| GIF | GIF | ✗ | 动画 GIF 需服务端 |
+| GIF | GIF | ✗ | 动画 GIF 需服务端；失败时展示错误提示 |
 
-**OFFLINE 模式时**: GIF 输出格式选项完全从 UI 移除（tree-shaking 消除代码路径）。
+**运行时行为**: GIF 输出始终路由服务端（`strategy: "server"`）；服务端失败时响应式展示错误（不预先禁用）。
 
 ---
 
-## 3. Vite `define` 与构建时 tree-shaking
+## 3. 服务端错误处理（规格澄清 2026-08-06 替换原 OFFLINE 章节）
 
-**决策**: 在 `vite.config.ts` 中通过 `define` 注入 `import.meta.env.OFFLINE` 为构建时布尔常量。
+**决策**: 响应式错误处理，区分 HTTP 错误与网络超时，移除 OFFLINE 构建模式。
 
-**理由**:
-
-- Rollup/Vite 的 `define` 在编译期进行字符串替换，使 `if (import.meta.env.OFFLINE)` 分支被识别为死代码
-- 死代码在 Rollup tree-shaking 阶段完全移除，产物中不留任何 `/api/convert` 引用
-- `VITE_OFFLINE` 作为环境变量名（pnpm 脚本中传入），`import.meta.env.OFFLINE` 作为代码中访问键
+**理由**: OFFLINE 构建模式在代码中引入大量 `if (import.meta.env.OFFLINE)` 判断，实现复杂度不可接受。改用运行时错误提示更符合实际使用场景（服务端偶发故障，而非永久离线）。
 
 **实现**:
 
 ```ts
-// vite.config.ts 中
-define: {
-  'import.meta.env.OFFLINE': JSON.stringify(process.env.VITE_OFFLINE === 'true'),
+// AbortController 超时（30 秒）
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 30_000);
+try {
+  const response = await fetch("/api/convert", { signal: controller.signal, ... });
+  if (!response.ok) {
+    const contentType = response.headers.get("Content-Type") ?? "";
+    let errMsg = getMessage("conversionFailed");
+    if (contentType.includes("application/json")) {
+      try { errMsg = ((await response.json()) as { error?: string }).error ?? errMsg; }
+      catch { /* 非标准 JSON 回退 */ }
+    }
+    throw new Error(getMessage("backendError").replace("{status}", String(response.status)));
+  }
+} catch (err) {
+  if (err instanceof DOMException && err.name === "AbortError") {
+    throw new Error(getMessage("connectionTimeout"));
+  }
+  throw err;
+} finally {
+  clearTimeout(timeoutId);
 }
 ```
 
-**TypeScript 类型声明**（需在 `vite-env.d.ts` 或 `env.d.ts` 中扩展）:
+**新增 i18n 键**:
 
-```ts
-interface ImportMetaEnv {
-  readonly OFFLINE: boolean;
-}
-```
+- `backendError`: "后端转换失败 ({status})" — 含 `{status}` 占位符
+- `connectionTimeout`: "连接超时，请稍后重试" — 无占位符
 
 **备选方案（已评估，未采用）**:
 
-- `import.meta.env.VITE_OFFLINE`：Vite 内置前缀方案，会暴露到客户端 env 对象，但无法保证死代码消除（Vite 对 VITE_ 前缀变量的 tree-shaking 行为不稳定）
-- 运行时条件判断：无法实现构建时移除，产物仍含 API 调用代码
+- 主动健康检测（ping）：增加额外网络开销，大多数情况服务正常无需提前检测
+- 自动重试：隐藏错误，用户可能不知道发生了什么，违反规格要求"明确提示"
 
 ---
 
@@ -111,74 +122,50 @@ interface ImportMetaEnv {
 
 ## 5. 转换路由策略
 
-**决策**: 实现三层路由：构建时 OFFLINE → 运行时 hasBackend → 格式矩阵。
+**决策**: 实现两层路由（规格澄清后移除 OFFLINE 层）：格式矩阵决定路由，无运行时 hasBackend 判断。
 
 ```
 convertImage(options):
-  if (import.meta.env.OFFLINE)
-    → browserConvert(options)  // 服务端路径静态消除
-  else if (!hasBackend)
-    → browserConvert(options)
-  else if (isServerOnlyFormat(options.targetFormat))
-    → serverConvert(options)   // 仅 GIF 输出走服务端
-  else
-    → browserConvert(options)  // 节省服务器资源，优先浏览器
+  capability = matrix["${input}→${output}"]
+  if (capability.strategy === 'unavailable')
+    → 抛出错误（当前永不到达，hasBackend 始终 true）
+  if (capability.strategy === 'browser')
+    → browserConvert(options)   // JPEG/PNG/WebP 互转
+  → serverConvert(options)      // 仅 GIF 输出
 ```
 
-**服务端独有场景**（非 OFFLINE 且 hasBackend）:
+**服务端独有场景**: 输出格式为 GIF（浏览器无 GIF 编码能力）。
 
-- 输出格式为 GIF（动画 GIF 需服务端 Sharp）
-
-所有其他格式组合优先使用浏览器端，既节省服务器资源又保障离线可用性。
+所有其他格式组合固定使用浏览器端，节省服务器资源。
 
 ---
 
-## 6. `PlatformCapabilities` 重构
+## 6. `PlatformCapabilities` 重构（含 extension/webview hasBackend）
 
-**决策**: 重构 `canConvertImages` 语义，新增 `hasBackend` 到 `PlatformCapabilities`。
+**决策**: `canConvertImages` 始终 `true`；`hasBackend` 对所有运行时类型（含 extension/webview）设为 `true`。
 
-**当前问题**:
-
-- `canConvertImages: false` 对 `extension`/`webview` 直接拦截整个转换 UI
-- 但 extension/webview 其实可以执行浏览器端转换
+**理由**: Chrome 扩展通过 `host_permissions` 声明可访问任意外部 HTTP API；Webview 可访问父 App 内嵌的后端服务。两者与普通 Web 无本质区别，不应预先限制访问能力。错误由响应式异常处理捕获。
 
 **新设计**:
 
 ```ts
 interface PlatformCapabilities {
-  canConvertImages: boolean;  // 始终 true（浏览器端始终可用）
-  hasBackend: boolean;        // 来自 RuntimeContext.hasBackend
+  canConvertImages: boolean;  // 始终 true
+  hasBackend: boolean;        // 始终 true（含 extension/webview）
   canInstallPwa: boolean;
   router: "browser" | "hash";
 }
 ```
 
-**向后兼容**: `computeCapabilities()` 中 `canConvertImages` 全部改为 `true`，`hasBackend` 从 `runtime.hasBackend` 取值。
+**实现**: `detect.ts` 中 extension 和 webview 分支改为 `hasBackend: true`。
 
 ---
 
-## 7. 新增构建脚本
-
-**决策**: 在 `package.json` 中追加三个 offline 变体脚本。
-
-```json
-{
-  "build:web:offline":       "VITE_BUILD_TARGET=web VITE_OFFLINE=true vite build",
-  "build:extension:offline": "VITE_BUILD_TARGET=extension VITE_OFFLINE=true vite build",
-  "build:webview:offline":   "VITE_BUILD_TARGET=webview VITE_OFFLINE=true vite build"
-}
-```
-
-**备选方案**: 使用 `cross-env` 包解决 Windows 兼容性——项目目前无 Windows CI，暂不引入。
-
----
-
-## 8. WebP 浏览器支持检测
+## 7. WebP 浏览器支持检测
 
 **决策**: 运行时检测 WebP 输出支持，对不支持的浏览器禁用 WebP 输出选项（非报错）。
 
-**实现**: 使用 Canvas toBlob 测试或 `navigator.userAgent` 检测 Safari 版本。
-推荐方式：尝试 `canvas.toBlob(cb, 'image/webp')` 并检查返回 Blob 的 `type` 是否为 `image/webp`（若浏览器不支持会回退到 `image/png`）。
+**实现**: 尝试 `canvas.toBlob(cb, 'image/webp')` 并检查返回 Blob 的 `type` 是否为 `image/webp`（若浏览器不支持会回退到 `image/png`）。
 
 **已知限制**:
 

@@ -24,7 +24,7 @@ export function computeCapabilityMatrix(hasBackend: boolean): CapabilityMatrix {
 
       if (output === "gif") {
         // GIF 输出：浏览器无法编码，需要服务端 Sharp
-        if (import.meta.env.OFFLINE || !hasBackend) {
+        if (!hasBackend) {
           matrix[key] = { strategy: "unavailable" };
         } else {
           matrix[key] = { strategy: "server" };

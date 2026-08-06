@@ -1,7 +1,7 @@
 # 接口契约：转换模块
 
-**阶段**: Phase 1 设计  
-**日期**: 2026-08-05  
+**阶段**: Phase 1 设计（已更新 2026-08-06）
+**日期**: 2026-08-05 / 更新: 2026-08-06
 **功能**: [spec.md](../spec.md)
 
 ---
@@ -25,17 +25,16 @@ src/client/convert/
 ```ts
 /**
  * 计算当前环境下所有格式转换组合的可用策略。
- * import.meta.env.OFFLINE 在构建时静态替换，不作为函数参数传入。
+ * hasBackend 当前始终为 true；无 OFFLINE 构建时条件。
  */
 function computeCapabilityMatrix(hasBackend: boolean): CapabilityMatrix
 ```
 
 **行为**:
 
-- 构建时若 `import.meta.env.OFFLINE === true`：所有输出为 GIF 的组合返回 `unavailable`，其余全部返回 `browser`
-- 运行时 `hasBackend === false`：同上
-- 运行时 `hasBackend === true`：GIF 输出返回 `server`，其余返回 `browser`
+- GIF 输出：`hasBackend === true` → `server`；`hasBackend === false` → `unavailable`（当前不会触发）
 - GIF 输入转非 GIF 输出：附加 `requiresWarning: "gifFirstFrameWarning"`
+- 其余格式组合：始终 `browser`
 
 ### `checkWebPOutputSupport(): Promise<boolean>`
 
@@ -85,7 +84,7 @@ function browserConvert(options: ConversionOptions): Promise<ConversionResult>
 ```ts
 /**
  * 通过 POST /api/convert 调用后端 Express + Sharp/Jimp 转换。
- * 此模块整体在 import.meta.env.OFFLINE === true 时被 tree-shaking 消除。
+ * 含 30 秒 AbortController 超时；区分 HTTP 错误与网络超时两类错误提示。
  */
 function serverConvert(options: ConversionOptions): Promise<ConversionResult>
 ```
@@ -94,7 +93,9 @@ function serverConvert(options: ConversionOptions): Promise<ConversionResult>
 
 - 请求：`multipart/form-data`，字段：`file`, `targetFormat`, `quality`, `compressionLevel`, `lossless`
 - 成功响应：`200 OK`，`Content-Type: image/*`，二进制 Blob，头部含 `X-Processor-Used`
-- 错误响应：`4xx/5xx`，`Content-Type: application/json`，`{ error: string }`
+- HTTP 错误响应：抛出含状态码的错误（`getMessage("backendError").replace("{status}", status)`）
+- 网络超时（30s 无响应）：抛出 `getMessage("connectionTimeout")`
+- 非 JSON 错误响应：安全回退为通用 `getMessage("conversionFailed")`，不崩溃
 
 ---
 
@@ -120,10 +121,11 @@ function routeConversion(
 ```ts
 const capability = matrix[`${inputFmt}→${options.targetFormat}`];
 if (capability.strategy === 'unavailable') throw new Error('...');
-if (import.meta.env.OFFLINE || capability.strategy === 'browser') {
+if (capability.strategy === 'browser') {
   return browserConvert(options);
 }
-return serverConvert(options); // 此行在 OFFLINE 构建时被消除
+// 服务端路径（仅 GIF 输出）
+return serverConvert(options);
 ```
 
 ---
@@ -163,25 +165,18 @@ Body: 二进制图片数据
 
 ---
 
-## `vite-env.d.ts` 扩展（TypeScript 类型）
+## `vite-env.d.ts` 扩展（已废弃）
 
-需在 `src/client/vite-env.d.ts`（或 `env.d.ts`）中添加：
-
-```ts
-interface ImportMetaEnv {
-  readonly OFFLINE: boolean;
-}
-```
+~~`OFFLINE: boolean`~~ — 规格澄清后不再需要 OFFLINE 类型声明。`src/client/vite-env.d.ts` 中 OFFLINE 声明应删除。
 
 ---
 
 ## 构建脚本契约
 
-| 脚本名 | 环境变量 | 输出目录 | OFFLINE |
-| -------- | --------- | --------- | --------- |
-| `build:web` | `VITE_BUILD_TARGET=web` | `dist/` | false |
-| `build:web:offline` | `VITE_BUILD_TARGET=web VITE_OFFLINE=true` | `dist/` | true |
-| `build:extension` | `VITE_BUILD_TARGET=extension` | `dist-ext/` | false |
-| `build:extension:offline` | `VITE_BUILD_TARGET=extension VITE_OFFLINE=true` | `dist-ext/` | true |
-| `build:webview` | `VITE_BUILD_TARGET=webview` | `dist-webview/` | false |
-| `build:webview:offline` | `VITE_BUILD_TARGET=webview VITE_OFFLINE=true` | `dist-webview/` | true |
+| 脚本名 | 环境变量 | 输出目录 |
+| -------- | --------- | --------- |
+| `build:web` | `VITE_BUILD_TARGET=web` | `dist/` |
+| `build:extension` | `VITE_BUILD_TARGET=extension` | `dist-ext/` |
+| `build:webview` | `VITE_BUILD_TARGET=webview` | `dist-webview/` |
+
+> ~~`build:*:offline` 脚本~~已从规格中移除。

@@ -33,9 +33,9 @@ function consumeRuntimeCookie(): string | null {
 
 /** 检测运行环境（4 级优先级） */
 export function detectRuntimeContext(): RuntimeContext {
-  // ① Chrome 扩展
+  // ① Chrome 扩展：extension 可通过 host_permissions 访问外部 API
   if (typeof chrome !== "undefined" && typeof chrome?.runtime?.id === "string") {
-    return { type: "extension", hasBackend: false };
+    return { type: "extension", hasBackend: true };
   }
 
   // ② Webview：Cookie 或 sessionStorage 中的 runtime 标识
@@ -47,7 +47,8 @@ export function detectRuntimeContext(): RuntimeContext {
       : null);
 
   if (sessionValue === "webview") {
-    return { type: "webview", hasBackend: false };
+    // webview 可访问父 App 内嵌后端服务
+    return { type: "webview", hasBackend: true };
   }
 
   // ③ PWA standalone 模式

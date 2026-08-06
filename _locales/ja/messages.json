@@ -79,5 +79,14 @@
     },
     "webpNotSupported": {
         "message": "お使いのブラウザはWebP出力をサポートしていません"
+    },
+    "backendError": {
+        "message": "バックエンド変換に失敗しました ({status})"
+    },
+    "connectionTimeout": {
+        "message": "接続がタイムアウトしました。後でもう一度お試しください"
+    },
+    "largeSizeWarning": {
+        "message": "大きなファイルを検出しました（>50MB）。メモリ不足によりブラウザでの処理が遅くなる場合があります。"
     }
 }

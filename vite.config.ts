@@ -54,10 +54,6 @@ if (target === "extension") {
 
 export default defineConfig({
   plugins,
-  define: {
-    // 构建时静态替换，Rollup tree-shaking 消除服务端代码路径
-    "import.meta.env.OFFLINE": JSON.stringify(process.env.VITE_OFFLINE === "true"),
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src/client"),

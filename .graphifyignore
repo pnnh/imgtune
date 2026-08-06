@@ -1,0 +1,194 @@
+# .cbmignore
+# Only rules that supplement .gitignore (codebase-memory-mcp already reads .gitignore).
+# Use leading / to anchor patterns to the repo root for reliability.
+
+# Build outputs (root-level) — anchored
+/build/
+/target/
+/out/
+/output/
+/dist/
+/dist-ext/
+/dist-server/
+/dist-webview/
+
+# C++ dependency trees (can be massive even if nested inside /build/)
+vcpkg_installed/
+vcpkg/installed/
+
+# Nested Gradle/Android build dirs not covered by root-anchored /build/
+dawn/app/build/
+dawn/app/.gradle/
+dawn/.gradle/
+
+# Node / frontend artifacts
+node_modules/
+.pnpm-store/
+justitia/dist/
+justitia/.vite/
+justitia/.rollup.cache/
+
+# Generated / binary artifacts
+*.onnx
+*.pt
+*.bin
+*.pth
+*.h5
+*.safetensors
+*.model
+*.parquet
+*.arrow
+*.pdb
+
+# IDE
+.idea/
+.vs/
+xcuserdata/
+DerivedData/
+
+# Misc
+.dolt/
+*.db
+
+# JetBrains
+.idea/
+.cache/
+
+# Visual Studio
+*.user
+.vs/
+*.suo
+obj/
+bin/
+packages/
+_build/
+x64/
+*.pdb
+
+# CMake
+build/
+cmake-build-*
+vcpkg_installed/
+
+# xcode macos and ios
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.ipa
+*.dSYM.zip
+*.dSYM
+.build/
+Packages/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.hmap
+Pods/
+.swiftpm/
+
+# Nodejs
+node_modules/
+
+# Rust
+target/
+
+# visual studio
+.vs/
+packages/
+x64/
+Generated Files/
+vcpkg_installed/
+out/
+obj/
+bin/
+ARM64/
+_build/
+build/
+.idea/
+
+.idea/
+target/
+output/
+cmake-build-*
+docker/proxima
+docker/assets
+.vscode/
+
+# JetBrains
+.idea/
+.cache/
+
+# Visual Studio
+*.user
+.vs/
+*.suo
+obj/
+bin/
+packages/
+_build/
+x64/
+
+# CMake
+build/
+cmake-build-*
+vcpkg_installed/
+
+# xcode macos and ios
+xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+*.ipa
+*.dSYM.zip
+*.dSYM
+.build/
+Packages/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.hmap
+Pods/
+.swiftpm/
+
+# Nodejs
+node_modules/
+.pnpm-store/
+
+# Rust
+target/
+output/
+
+# Qt
+.qtcreator/
+
+# Graphify
+graphify-out/
+
+# Git Entire
+.entire/
+
+# qoder
+.qoder/
+
+# claude code
+.claude/
+
+# github copilot
+.github/
+
+# nextjs
+.next/
+

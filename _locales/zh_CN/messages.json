@@ -79,5 +79,14 @@
     },
     "webpNotSupported": {
         "message": "您的浏览器不支持 WebP 格式输出"
+    },
+    "backendError": {
+        "message": "后端转换失败 ({status})"
+    },
+    "connectionTimeout": {
+        "message": "连接超时，请稍后重试"
+    },
+    "largeSizeWarning": {
+        "message": "检测到大文件（>50MB），浏览器处理可能较慢或因内存不足而失败。"
     }
 }

@@ -1,7 +1,7 @@
-# 数据模型：浏览器端图片转换与离线构建模式
+# 数据模型：浏览器端图片转换与服务端错误处理
 
-**阶段**: Phase 1 设计  
-**日期**: 2026-08-05  
+**阶段**: Phase 1 设计（已更新 2026-08-06）
+**日期**: 2026-08-05 / 更新: 2026-08-06
 **功能**: [spec.md](./spec.md)
 
 ---
@@ -23,7 +23,7 @@ type ImageFormat = "jpeg" | "png" | "webp" | "gif";
 type ConversionStrategy =
   | "browser"      // Canvas API 处理，无网络请求
   | "server"       // POST /api/convert
-  | "unavailable"; // 当前环境不支持（OFFLINE 下 GIF 输出）
+  | "unavailable"; // 当前环境不支持（hasBackend=false 时 GIF 输出）
 ```
 
 ### FormatCapability（格式能力描述）
@@ -45,11 +45,10 @@ interface FormatCapability {
 type CapabilityMatrix = Record<string, FormatCapability>;
 ```
 
-**矩阵构建规则**（按优先级）:
+**矩阵构建规则**:
 
-1. **构建时 OFFLINE = true**: GIF 输出 → `unavailable`；其余全部 → `browser`
-2. **运行时 hasBackend = false**: GIF 输出 → `unavailable`；其余全部 → `browser`
-3. **运行时 hasBackend = true**: GIF 输出 → `server`；其余全部 → `browser`
+1. **hasBackend = false**: GIF 输出 → `unavailable`；其余全部 → `browser`（当前不触发，hasBackend 始终为 true）
+2. **hasBackend = true**: GIF 输出 → `server`；其余全部 → `browser`
 
 **GIF 输入 + 非 GIF 输出** 始终附带 `requiresWarning: "gifFirstFrameWarning"`。
 
@@ -93,7 +92,7 @@ interface PlatformCapabilities {
 }
 ```
 
-**变更**: `extension`/`webview` 的 `canConvertImages` 由 `false` 改为 `true`。`hasBackend` 从 `RuntimeContext.hasBackend` 透传。
+**变更**: `extension`/`webview` 的 `canConvertImages` 由 `false` 改为 `true`；`hasBackend` 所有运行时类型均为 `true`（含 extension/webview）。
 
 ---
 
@@ -103,7 +102,7 @@ interface PlatformCapabilities {
 
 ```
 idle → uploading → converting → success
-                             ↘ error
+                             ↘ error (serverError | timeoutError | browserError)
 ```
 
 | 状态 | 描述 |
@@ -112,14 +111,15 @@ idle → uploading → converting → success
 | `uploading` | 文件选择/拖放处理中 |
 | `converting` | 浏览器端 Canvas 处理或等待服务端响应 |
 | `success` | 转换完成，结果 Blob 可用 |
-| `error` | 转换失败，显示错误信息 |
+| `serverError` | 服务端返回 HTTP 错误，error 消息含状态码 |
+| `timeoutError` | 服务端请求超时（30s），error 消息为超时提示 |
+| `browserError` | Canvas 处理失败（如不支持的格式） |
 
 ### 格式选项可见性状态
 
 ```
-buildTime(OFFLINE=true)  →  unavailableFormats = ["gif"]
-runtime(hasBackend=false) →  unavailableFormats = ["gif"]  
-runtime(hasBackend=true)  →  unavailableFormats = []
+hasBackend = true（所有运行时）→  unavailableFormats = []（GIF 始终可用）
+WebP 不支持的浏览器            →  webpDisabled = true
 ```
 
 ---
@@ -133,9 +133,9 @@ runtime(hasBackend=true)  →  unavailableFormats = []
 normalizeInputFormat(file.type)
     │
     ▼
-computeCapabilityMatrix(OFFLINE, hasBackend)
+computeCapabilityMatrix(hasBackend)
     │
-    ├── 过滤可用输出格式 → 更新 UI 格式选择器
+    ├── 格式选择器（GIF 始终启用；WebP 按运行时检测）
     │
     ▼
 用户点击转换

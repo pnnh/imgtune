@@ -71,4 +71,7 @@ export type MessageKey =
   | "closePreview"
   | "savedSize"
   | "gifFirstFrameWarning"
-  | "webpNotSupported";
+  | "webpNotSupported"
+  | "backendError"
+  | "connectionTimeout"
+  | "largeSizeWarning";

@@ -1,6 +1,6 @@
-# 实施计划：浏览器端图片转换与离线构建模式
+# 实施计划：浏览器端图片转换与服务端错误处理
 
-**分支**: `main` | **日期**: 2026-08-05 | **规格**: [spec.md](./spec.md)
+**分支**: `main` | **日期**: 2026-08-06 | **规格**: [spec.md](./spec.md)
 
 **输入**: 功能规格说明 `specs/002-browser-convert-offline/spec.md`
 
@@ -8,7 +8,7 @@
 
 ## 摘要
 
-将现有图片转换功能重构为双路由架构：浏览器端（Canvas API，无网络请求，所有运行时可用）和服务端（POST /api/convert，仅有后端且目标为 GIF 时使用）。引入构建时 `import.meta.env.OFFLINE` 标志，通过 Vite `define` + Rollup tree-shaking 生成完全离线版本。修复 Chrome 扩展和 Webview 中转换 UI 不可用的缺陷。
+将现有图片转换功能重构为双路由架构：浏览器端（Canvas API，无网络请求，所有运行时可用）和服务端（POST /api/convert，仅 GIF 输出时使用）。所有运行时类型（含 Chrome 扩展和 Webview）均设置 `hasBackend: true`。当服务端调用失败时，向用户展示包含 HTTP 状态码的友好错误提示，超时错误使用独立提示语。移除原 OFFLINE 构建模式（实现复杂度不可接受）。
 
 ---
 
@@ -28,7 +28,7 @@
 
 **性能目标**: 浏览器端转换 < 5MB 图片 < 5 秒
 
-**约束**: OFFLINE 构建产物不含 `/api/convert`；Safari < 14 无 WebP 输出
+**约束**: 服务端错误响应式处理（无主动心跳）；Safari < 14 无 WebP 输出；请求超时 30 秒
 
 **规模**: 单用户会话，无状态
 
@@ -65,21 +65,23 @@ specs/002-browser-convert-offline/
 ```text
 # 新增文件
 src/client/convert/
-├── capabilities.ts     # 能力矩阵计算（CapabilityMatrix）
+├── capabilities.ts     # 能力矩阵计算（CapabilityMatrix，无 OFFLINE 依赖）
 ├── browserConvert.ts   # Canvas API 转换实现
-├── serverConvert.ts    # 服务端 /api/convert 调用（OFFLINE 时 tree-shaken）
-└── router.ts           # 转换路由器（strategy 选择）
-
-src/client/vite-env.d.ts  # 扩展 ImportMetaEnv，声明 OFFLINE 类型
+├── serverConvert.ts    # 服务端 /api/convert 调用（含超时、错误处理）
+└── router.ts           # 转换路由器（strategy 选择，无 OFFLINE 条件）
 
 # 修改文件
-src/client/components/ImageConverter.tsx  # 使用 routeConversion()，修复 GIF 提示
+src/client/components/ImageConverter.tsx  # 使用 routeConversion()，GIF 提示，服务端错误展示
 src/client/runtime/context.tsx            # 重构 PlatformCapabilities，canConvertImages 始终 true，新增 hasBackend
-vite.config.ts                            # 添加 OFFLINE define 注入
-package.json                              # 添加 build:*:offline 脚本
+src/client/runtime/detect.ts             # extension/webview 改为 hasBackend: true
 
-# _locales 可能需要新增翻译键
-_locales/*/messages.json                  # 新增 "gifFirstFrameWarning"、"webpNotSupported" 等 i18n 键
+# _locales 新增翻译键（含 Phase 7 Convergence 新增键）
+_locales/*/messages.json                  # gifFirstFrameWarning、webpNotSupported、backendError、connectionTimeout
+
+# 移除文件/内容
+src/client/vite-env.d.ts                  # 删除 OFFLINE 类型声明
+vite.config.ts                            # 移除 define.import.meta.env.OFFLINE
+package.json                              # 移除 build:*:offline 脚本
 ```
 
 ---
@@ -98,10 +100,13 @@ _locales/*/messages.json                  # 新增 "gifFirstFrameWarning"、"web
 | -------- | ------ |
 | 浏览器端转换库 | 使用原生 Canvas API，零额外依赖 |
 | GIF 输入解码 | 浏览器原生，Canvas 绘制第一帧 |
-| GIF 输出 | 浏览器不支持，OFFLINE 模式下隐藏选项 |
-| OFFLINE 构建 | Vite `define` + Rollup tree-shaking，`import.meta.env.OFFLINE` 编译期替换 |
+| GIF 输出 | 浏览器不支持，始终路由服务端；失败时展示错误提示 |
+| 请求超时 | AbortController + setTimeout(30s)，超时识别 err.name === "AbortError" |
+| 非 JSON 响应 | Content-Type 检测 + try-catch，回退通用错误消息，避免崩溃 |
+| HTTP 状态码插值 | backendError i18n 键含占位符，格式"后端转换失败 (503)" |
+| extension/webview hasBackend | 技术上均可访问网络，两者均设为 `true` |
 | WebP 支持检测 | Canvas.toBlob 测试，Safari < 14 禁用选项 |
-| PlatformCapabilities | `canConvertImages` 全部改为 `true`，新增 `hasBackend` |
+| PlatformCapabilities | `canConvertImages` 全部为 `true`，`hasBackend` 全部为 `true` |
 
 ---
 

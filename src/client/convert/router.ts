@@ -21,10 +21,10 @@ export async function routeConversion(
     );
   }
 
-  if (import.meta.env.OFFLINE || capability.strategy === "browser") {
+  if (capability.strategy === "browser") {
     return browserConvert(options);
   }
 
-  // 服务端路径（GIF 输出，非 OFFLINE 模式）—— OFFLINE 构建时被 tree-shaking 消除
+  // 服务端路径（仅 GIF 输出）
   return serverConvert(options);
 }

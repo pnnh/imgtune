@@ -79,5 +79,14 @@
     },
     "webpNotSupported": {
         "message": "A saída WebP não é suportada no seu navegador"
+    },
+    "backendError": {
+        "message": "Falha na conversão do servidor ({status})"
+    },
+    "connectionTimeout": {
+        "message": "Tempo de ligação esgotado, tente novamente mais tarde"
+    },
+    "largeSizeWarning": {
+        "message": "Ficheiro grande detetado (>50MB). O processamento no navegador pode ser lento devido a limites de memória."
     }
 }

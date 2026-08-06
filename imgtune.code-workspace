@@ -55,7 +55,8 @@
 			"**/.beads/**": true,
 			"**/.idea/**": true,
 			"dist/**": true,
-			"dist-*/**": true
+			"dist-*/**": true,
+			".entire/**": true,
 		}
 	}
 }

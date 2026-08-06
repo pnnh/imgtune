@@ -167,6 +167,13 @@ export default function ImageConverter() {
                             </div>
                         )}
 
+                        {/* 大文件性能警告 */}
+                        {file && file.size > 50 * 1024 * 1024 && (
+                            <div className="bg-orange-50 border border-orange-200 text-orange-700 rounded-xl px-4 py-3 text-sm">
+                                {getMessage("largeSizeWarning")}
+                            </div>
+                        )}
+
                         {/* 目标格式选择 */}
                         <div className="space-y-4">
                             <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">{getMessage("selectTargetFormat")}</h3>
